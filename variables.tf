@@ -50,6 +50,12 @@ variable "stage" {
   description = "Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release'"
 }
 
+variable "name" {
+  type        = string
+  description = "The name"
+  default     = ""
+}
+
 variable "attributes" {
   type        = list(string)
   default     = []

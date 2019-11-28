@@ -5,7 +5,7 @@ output "is_valid" {
 output "bucket" {
   value = local.is_valid ? {
     id                          = aws_s3_bucket.redirect[0].id
-    name                        = aws_s3_bucket.redirect[0].name
+    bucket                      = aws_s3_bucket.redirect[0].bucket
     arn                         = aws_s3_bucket.redirect[0].arn
     bucket_domain_name          = aws_s3_bucket.redirect[0].bucket_domain_name
     bucket_regional_domain_name = aws_s3_bucket.redirect[0].bucket_regional_domain_name

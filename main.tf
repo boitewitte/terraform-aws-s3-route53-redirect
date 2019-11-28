@@ -1,11 +1,14 @@
 locals {
   is_valid = (
-    var.protocol != null &&
-    contains(
-      ["https://", "http://"],
-      local.protocol
-    )
-  ) || var.protocol == null
+    (
+      var.protocol != null &&
+      contains(
+        ["https://", "http://"],
+        local.protocol
+      )
+    ) ||
+    var.protocol == null
+  ) && length(local.route53_records) > 0
 }
 
 module "label" {

@@ -10,6 +10,8 @@ locals {
 }
 
 resource "aws_s3_bucket" "redirect" {
+  count = local.is_valid ? 1 : 0
+
   bucket = module.label.id
   acl    = var.bucket_acl
 

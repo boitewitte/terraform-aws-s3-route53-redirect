@@ -1,15 +1,15 @@
-output "protocol" {
-  value = local.protocol
-}
-
 output "is_valid" {
   value = local.is_valid
 }
 
-output "route53_zones" {
-  value = local.route53
+output "bucket" {
+  value = local.is_valid ? aws_s3_bucket.redirect[0] : {}
 }
 
-output "route53_records" {
-  value = local.route53_records
+output "records" {
+  value = aws_route53_record.record
+}
+
+output "zones" {
+  value = local.route53_zones
 }

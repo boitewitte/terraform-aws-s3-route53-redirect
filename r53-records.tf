@@ -32,7 +32,7 @@ locals {
 }
 
 resource "aws_route53_record" "record" {
-  count = length(local.route53_records)
+  count = local.is_valid && length(local.route53_records)
 
   zone_id = lookup(
     local.route53_zone_ids,
@@ -43,8 +43,8 @@ resource "aws_route53_record" "record" {
   type = "A"
 
   alias {
-    name                   = aws_s3_bucket.redirect.bucket_domain_name
-    zone_id                = aws_s3_bucket.redirect.hosted_zone_id
+    name                   = aws_s3_bucket.redirect[0].bucket_domain_name
+    zone_id                = aws_s3_bucket.redirect[0].hosted_zone_id
     evaluate_target_health = false
   }
 }

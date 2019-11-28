@@ -32,7 +32,7 @@ locals {
 }
 
 resource "aws_route53_record" "record" {
-  count = local.is_valid && length(local.route53_records)
+  count = local.is_valid ? length(local.route53_records) : 0
 
   zone_id = lookup(
     local.route53_zone_ids,

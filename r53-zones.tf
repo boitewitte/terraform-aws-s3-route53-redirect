@@ -10,12 +10,16 @@ locals {
       )
     )
   ]
+  zones = [
+    for zone in local.route53 :
+    zone.zone
+  ]
 }
 
 resource "aws_route53_zone" "zone" {
-  count = local.is_valid && var.create_zones && length(local.route53) > 0 ? length(local.route53) : 0
+  count = local.is_valid && var.create_zones && length(local.zones) > 0 ? length(local.zones) : 0
 
-  name = lookup(local.route53[count.index], "zone")
+  name = local.route53[count.index]
   tags = module.label.tags
 }
 

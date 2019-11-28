@@ -19,7 +19,16 @@ module "label" {
   environment = var.environment
   namespace   = var.namespace
   stage       = var.stage
-  tags        = var.tags
+  tags = merge(
+    var.tags,
+    {
+      Target = format(
+        "%s%s",
+        var.protocol != null ? local.protocol : "",
+        var.target
+      )
+    }
+  )
 
   name = var.name
 }

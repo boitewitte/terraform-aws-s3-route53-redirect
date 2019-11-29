@@ -58,6 +58,7 @@ locals {
   cert_validation_records = [
     for name in local.cert_validation_record_names :
     {
+      name = name
       zone_id = element([
         for record in local.certificate_records :
         record.zone_id

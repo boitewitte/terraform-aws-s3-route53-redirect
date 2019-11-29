@@ -52,12 +52,37 @@ locals {
 #   }
 # }
 
-resource "aws_route53_record" "cert_validation" {
-  count = length(local.certificate_records)
+locals {
+  cert_validation_record_names = distinct(local.certificate_records[*].name)
 
-  zone_id = local.certificate_records[count.index].zone_id
-  name    = local.certificate_records[count.index].name
-  type    = local.certificate_records[count.index].type
-  records = list(local.certificate_records[count.index].value)
+  cert_validation_records = [
+    for name in local.cert_validation_record_names :
+    {
+      zone_id = element([
+        for record in local.certificate_records :
+        record.zone_id
+        if record.name == name
+      ], 0)
+      type = element([
+        for record in local.certificate_records :
+        record.type
+        if record.name == name
+      ], 0)
+      records = [
+        for record in local.certificate_records :
+        record.value
+        if record.name == name
+      ]
+    }
+  ]
+}
+
+resource "aws_route53_record" "cert_validation" {
+  count = length(local.cert_validation_records)
+
+  zone_id = local.cert_validation_records[count.index].zone_id
+  name    = local.cert_validation_records[count.index].name
+  type    = local.cert_validation_records[count.index].type
+  records = local.cert_validation_records[count.index].records
   ttl     = 300
 }

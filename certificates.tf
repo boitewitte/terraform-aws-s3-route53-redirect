@@ -29,25 +29,11 @@ locals {
   }
 }
 
-# provider "aws" {
-#   alias = ""
-# }
-
-locals {
-  aws_acm_certificate = {
-    domain_name = replace(local.certificates[0].domain_name, "/\\.$/", "")
-    subject_alternative_names = [
-      for certificate in slice(local.certificates, 1, length(local.certificates)) :
-      certificate.domain_name
-    ]
-  }
-}
-
 resource "aws_acm_certificate" "certificates" {
   count = var.create_certificates ? 1 : 0
 
-  domain_name               = replace(local.certificate_domain_names[0], "/\\.$/", "")
-  subject_alternative_names = slice(local.certificate_domain_names, 1, length(local.certificate_domain_names))
+  domain_name               = replace(local.certificates[0], "/\\.$/", "")
+  subject_alternative_names = slice(local.certificates, 1, length(local.certificates))
 
   validation_method = "DNS"
 

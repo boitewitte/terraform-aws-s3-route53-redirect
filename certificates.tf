@@ -29,10 +29,10 @@ locals {
   }
 
   certificate_domain_name = replace(local.certificates[0].domain_name, "/\\.$/", "")
-  subject_alternative_names = [
+  subject_alternative_names = sort([
     for certificate in slice(local.certificates, 1, length(local.certificates)) :
     replace(certificate.domain_name, "/\\.$/", "")
-  ]
+  ])
 }
 
 resource "aws_acm_certificate" "certificates" {

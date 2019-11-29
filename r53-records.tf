@@ -51,3 +51,12 @@ resource "aws_route53_record" "record" {
     evaluate_target_health = false
   }
 }
+
+resource "aws_route53_record" "cert_validation" {
+  count = length(local.certificate_records)
+
+  zone_id = local.certificate_records[count.index].zone_id
+  name    = local.certificate_records[count.index].name
+  type    = local.certificate_records[count.index].type
+  records = [local.certificate_records[count.index].value]
+}

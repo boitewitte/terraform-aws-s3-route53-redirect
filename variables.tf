@@ -89,6 +89,12 @@ variable "route53" {
 
 }
 
+variable "create_certificates" {
+  type        = bool
+  description = "Create certificates for the Cloudfront Distribution"
+  default     = true
+}
+
 variable "cloudfront_price_class" {
   type        = string
   description = "The price class for this distribution. One of PriceClass_All, PriceClass_200, PriceClass_100"

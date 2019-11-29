@@ -36,6 +36,10 @@ output "certificate_records" {
   value = local.certificate_records
 }
 
+output "cert_validation_records" {
+  value = local.cert_validation_records
+}
+
 output "route53_certificate_records" {
   value = aws_route53_record.cert_validation
 }

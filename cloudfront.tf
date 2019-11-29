@@ -47,4 +47,6 @@ resource "aws_cloudfront_distribution" "redirect" {
     acm_certificate_arn = aws_acm_certificate.certificates[0].arn
     ssl_support_method  = var.cloudfront_ssl_support_method
   }
+
+  depends_on = ["aws_route53_record.cert_validation"]
 }

@@ -23,3 +23,23 @@ output "records" {
 output "zones" {
   value = local.route53_zones
 }
+
+output "certificates" {
+  value = aws_acm_certificate.certificates
+}
+
+output "certficate_records" {
+  value = local.certficate_records
+}
+
+# output "certificates" {
+#   value = local.certificates
+# }
+
+# output "certificate_zone_for_domain_name" {
+#   value = local.certificate_zone_for_domain_name
+# }
+
+# output "aws_acm_certificate" {
+#   value = local.aws_acm_certificate
+# }

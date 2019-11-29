@@ -6,9 +6,11 @@ locals {
 }
 
 resource "aws_cloudfront_distribution" "redirect" {
+  count = length(aws_s3_bucket.redirect) == 1 ? 1 : 0
+
   comment = "Redirect '${join("', '", local.distro_aliases)}' to: ${local.target}"
   origin {
-    domain_name = aws_s3_bucket.redirect.bucket_regional_domain_name
+    domain_name = aws_s3_bucket.redirect[0].bucket_regional_domain_name
     origin_id   = module.label.id
   }
 

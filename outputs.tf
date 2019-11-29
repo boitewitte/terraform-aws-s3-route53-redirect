@@ -28,6 +28,10 @@ output "certificates" {
   value = aws_acm_certificate.certificates
 }
 
+output "certificate_zone_for_domain_name" {
+  value = local.certificate_zone_for_domain_name
+}
+
 output "certificate_records" {
   value = local.certificate_records
 }

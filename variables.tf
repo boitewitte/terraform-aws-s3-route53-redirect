@@ -89,6 +89,12 @@ variable "route53" {
 
 }
 
+variable "cloudfront_price_class" {
+  type        = string
+  description = "The price class for this distribution. One of PriceClass_All, PriceClass_200, PriceClass_100"
+  default     = "PriceClass_100"
+}
+
 variable "bucket_acl" {
   type        = string
   description = "The Canned ACL for the Bucket"

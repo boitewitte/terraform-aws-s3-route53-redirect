@@ -8,15 +8,16 @@ locals {
 resource "aws_cloudfront_distribution" "redirect" {
   count = length(aws_s3_bucket.redirect) == 1 ? 1 : 0
 
-  comment = "Redirect '${join("', '", local.distro_aliases)}' to: ${local.target}"
+  enabled = local.is_valid
+
+  aliases     = local.distro_aliases
+  comment     = "Redirect '${join("', '", local.distro_aliases)}' to: ${local.target}"
+  price_class = var.cloudfront_price_class
+
   origin {
     domain_name = aws_s3_bucket.redirect[0].bucket_regional_domain_name
     origin_id   = module.label.id
   }
-
-  enabled = local.is_valid
-
-  aliases = local.distro_aliases
 
   default_cache_behavior {
     allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]

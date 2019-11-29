@@ -16,9 +16,9 @@ output "bucket" {
   } : {}
 }
 
-output "records" {
-  value = aws_route53_record.record
-}
+# output "records" {
+#   value = aws_route53_record.record
+# }
 
 output "zones" {
   value = local.route53_zones
@@ -30,6 +30,10 @@ output "certificates" {
 
 output "certificate_records" {
   value = local.certificate_records
+}
+
+output "route53_certificate_records" {
+  value = aws_route53_record.cert_validation
 }
 
 # output "certificates" {

@@ -53,7 +53,7 @@ resource "aws_acm_certificate" "certificates" {
 
   tags = module.label.tags
 
-  provider = "aws.cloudfront_cert"
+  provider = aws.cloudfront_cert
 }
 
 locals {

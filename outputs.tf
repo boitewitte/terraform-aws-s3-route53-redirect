@@ -28,8 +28,8 @@ output "certificates" {
   value = aws_acm_certificate.certificates
 }
 
-output "certficate_records" {
-  value = local.certficate_records
+output "certificate_records" {
+  value = local.certificate_records
 }
 
 # output "certificates" {

@@ -9,6 +9,14 @@ locals {
   )
 }
 
+locals {
+  target = format(
+    "%s%s",
+    var.protocol != null ? local.protocol : "",
+    var.target
+  )
+}
+
 resource "aws_s3_bucket" "redirect" {
   count = local.is_valid ? 1 : 0
 
@@ -16,10 +24,6 @@ resource "aws_s3_bucket" "redirect" {
   acl    = var.bucket_acl
 
   website {
-    redirect_all_requests_to = format(
-      "%s%s",
-      var.protocol != null ? local.protocol : "",
-      var.target
-    )
+    redirect_all_requests_to = local.target
   }
 }

@@ -25,15 +25,21 @@ locals {
 
   certificate_zone_for_domain_name = {
     for certificate in local.certificates :
-    certificate.domain_name => certificate.zone
+    replace(certificate.domain_name, "/\\.$/", "") => certificate.zone
   }
+
+  certificate_domain_name = replace(local.certificates[0].domain_name, "/\\.$/", "")
+  subject_alternative_names = [
+    for certificate in slice(local.certificates, 1, length(local.certificates)) :
+    replace(certificate.domain_name, "/\\.$/", "")
+  ]
 }
 
 resource "aws_acm_certificate" "certificates" {
   count = var.create_certificates ? 1 : 0
 
-  domain_name               = replace(local.certificates[0], "/\\.$/", "")
-  subject_alternative_names = slice(local.certificates, 1, length(local.certificates))
+  domain_name               = local.certificate_domain_name
+  subject_alternative_names = local.subject_alternative_names
 
   validation_method = "DNS"
 

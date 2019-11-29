@@ -33,4 +33,15 @@ resource "aws_cloudfront_distribution" "redirect" {
       }
     }
   }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+      locations        = []
+    }
+  }
+
+  viewer_certificate {
+    cloudfront_default_certificate = true
+  }
 }

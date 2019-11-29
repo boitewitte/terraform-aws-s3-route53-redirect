@@ -73,4 +73,6 @@ resource "aws_acm_certificate_validation" "certificate" {
 
   certificate_arn         = aws_acm_certificate.certificates[0].arn
   validation_record_fqdns = aws_route53_record.cert_validation[*].fqdn
+
+  provider = aws.cloudfront_cert
 }

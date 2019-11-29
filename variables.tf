@@ -101,6 +101,12 @@ variable "cloudfront_price_class" {
   default     = "PriceClass_100"
 }
 
+variable "cloudfront_ssl_support_method" {
+  type        = string
+  description = "Specifies how you want CloudFront to serve HTTPS requests. One of vip or sni-only"
+  default     = "sni-only"
+}
+
 variable "bucket_acl" {
   type        = string
   description = "The Canned ACL for the Bucket"

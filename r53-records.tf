@@ -68,11 +68,11 @@ locals {
         record.type
         if record.name == name
       ], 0)
-      records = [
+      records = distinct([
         for record in local.certificate_records :
         record.value
         if record.name == name
-      ]
+      ])
     }
   ]
 }

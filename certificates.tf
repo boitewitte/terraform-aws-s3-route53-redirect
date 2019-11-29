@@ -1,6 +1,6 @@
 locals {
   certificate_zone_domain_name_splitter = "|&|"
-  certificate_domain_names = distinct(
+  certificate_domain_names = sort(distinct(
     flatten([
       for record in local.route53_records :
       join(
@@ -12,7 +12,7 @@ locals {
           : format("%s.%s", "*", join(".", slice(split(".", record.record), 1, length(split(".", record.record)))))
         ]
       )
-    ])
+    ]))
   )
 
   certificates = [

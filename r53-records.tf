@@ -58,6 +58,6 @@ resource "aws_route53_record" "cert_validation" {
   zone_id = local.certificate_records[count.index].zone_id
   name    = local.certificate_records[count.index].name
   type    = local.certificate_records[count.index].type
-  records = [local.certificate_records[count.index].value]
+  records = list(local.certificate_records[count.index].value)
   ttl     = 300
 }

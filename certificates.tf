@@ -68,11 +68,12 @@ locals {
   ])
 }
 
-# resource "aws_acm_certificate_validation" "certificate" {
-#   count = var.create_certificates ? 1 : 0
+resource "aws_acm_certificate_validation" "certificate" {
+  count = var.create_certificates ? 1 : 0
 
-#   certificate_arn         = aws_acm_certificate.certificates[0].arn
-#   validation_record_fqdns = aws_route53_record.cert_validation[*].fqdn
+  certificate_arn         = aws_acm_certificate.certificates[0].arn
+  validation_record_fqdns = aws_route53_record.cert_validation[*].fqdn
 
-#   provider = aws.cloudfront_cert
-# }
+  depends_on = ["aws_route53_record.cert_validation", "aws_acm_certificate.certificates"]
+  provider   = aws.cloudfront_cert
+}
